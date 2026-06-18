@@ -1,0 +1,86 @@
+{
+  "$schema": "https://schema.tauri.app/config/2",
+  "mainBinaryName": "sillytavern-launcher-gui",
+  "productName": "SillyTavern Launcher GUI",
+  "version": "1.0.8",
+  "identifier": "com.sillytavern-launcher-gui",
+  "build": {
+    "beforeDevCommand": "bun run dev",
+    "devUrl": "http://localhost:1420",
+    "beforeBuildCommand": "bun run build",
+    "frontendDist": "../dist"
+  },
+  "app": {
+    "windows": [
+      {
+        "title": "酒馆启动器",
+        "width": 1200,
+        "height": 800,
+        "center": true,
+        "minWidth": 960,
+        "minHeight": 640,
+        "maxWidth": 1600,
+        "maxHeight": 1000,
+        "resizable": true,
+        "maximizable": false,
+        "decorations": false,
+        "dragDropEnabled": false
+      }
+    ],
+    "security": {
+      "csp": null
+    }
+  },
+  "plugins": {
+    "updater": {
+      "pubkey": "dW50cnVzdGVkIGNvbW1lbnQ6IG1pbmlzaWduIHB1YmxpYyBrZXk6IEIwMDk4NzVDRENFQTk2NzQKUldSMGx1cmNYSWNKc0hZbDF2UWNuOHFYNkRkQkVGNmtDNytUREVoc3FOcHJEL3E5bXhiZHZZWSsK",
+      "endpoints": [
+        "https://ghfast.top/https://github.com/al01cn/sillytavern-launcher/releases/latest/download/latest.json",
+        "https://gh.llkk.cc/https://github.com/al01cn/sillytavern-launcher/releases/latest/download/latest.json",
+        "https://github.com/al01cn/sillytavern-launcher/releases/latest/download/latest.json"
+      ]
+    }
+  },
+  "bundle": {
+    "copyright": "Make by 灵狼AL01",
+    "publisher": "AL01.CN",
+    "license": "MIT",
+    "active": true,
+    "createUpdaterArtifacts": true,
+    "targets": "all",
+    "icon": [
+      "icons/32x32.png",
+      "icons/128x128.png",
+      "icons/128x128@2x.png",
+      "icons/icon.icns",
+      "icons/icon.ico"
+    ],
+    "windows": {
+      "webviewInstallMode": {
+        "type": "embedBootstrapper"
+      },
+      "nsis": {
+        "installMode": "both",
+        "startMenuFolder": "SillyTavern Launcher GUI",
+        "installerIcon": "icons/icon.ico",
+        "displayLanguageSelector": true,
+        "installerHooks": "installer/hooks.nsh",
+        "template": "nsis/template.nsi",
+        "languages": [
+          "SimpChinese",
+          "English"
+        ],
+        "customLanguageFiles": {
+          "SimpChinese": "nsis/languages/SimpChinese.nsh",
+          "English": "nsis/languages/English.nsh"
+        }
+      },
+      "wix": {
+        "language": [
+          "zh-CN",
+          "en-US"
+        ]
+      }
+    }
+  }
+}

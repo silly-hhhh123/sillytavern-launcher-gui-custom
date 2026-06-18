@@ -1,0 +1,204 @@
+@import "tailwindcss";
+@variant dark (&:where(.dark, .dark *));
+@import "./tailwind.config.css";
+@plugin "daisyui";
+
+:root {
+  --ease-spring: cubic-bezier(0.4, 0.0, 0.2, 1);
+  --font-main:
+    -apple-system,
+    BlinkMacSystemFont,
+    "SF Pro Text",
+    "PingFang SC",
+    "Helvetica Neue",
+    "Segoe UI",
+    "Microsoft YaHei",
+    sans-serif;
+}
+
+
+body {
+  margin: 0;
+  padding: 0;
+  background-color: #F8FAFC;
+  color: #1E293B;
+  -webkit-font-smoothing: antialiased;
+  overflow: hidden;
+
+  font-family: var(--font-main) !important;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 1.6;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* 暗色主题 */
+.dark body {
+  background-color: #0F172A;
+  color: #E2E8F0;
+}
+
+/* 暗色主题下的通用样式增强 */
+.dark ::-webkit-scrollbar-thumb {
+  background: #475569;
+}
+
+.dark .bg-white {
+  background-color: #1E293B;
+}
+
+.dark .border-slate-100,
+.dark .border-slate-200 {
+  border-color: #334155;
+}
+
+.dark .text-slate-700,
+.dark .text-slate-800 {
+  color: #E2E8F0;
+}
+
+.dark .text-slate-500,
+.dark .text-slate-600 {
+  color: #94A3B8;
+}
+
+.dark .text-slate-400 {
+  color: #64748B;
+}
+
+.dark .bg-slate-50 {
+  background-color: #0F172A;
+}
+
+.dark .bg-slate-100 {
+  background-color: #1E293B;
+}
+
+.dark input,
+.dark textarea,
+.dark select {
+  background-color: #1E293B;
+  border-color: #334155;
+  color: #E2E8F0;
+}
+
+.dark input:focus,
+.dark textarea:focus,
+.dark select:focus {
+  border-color: #3B82F6;
+  background-color: #1E293B;
+}
+
+.dark .shadow-sm {
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.3);
+}
+
+.dark .shadow-md {
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3);
+}
+
+button:hover {
+  cursor: pointer;
+}
+
+button:disabled {
+  cursor: not-allowed;
+}
+
+a:disabled {
+  cursor: not-allowed;
+}
+
+/* Floating Button */
+.fab {
+  width: 52px;
+  height: 52px;
+  border-radius: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s var(--ease-spring);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+  position: fixed;
+  bottom: 32px;
+  z-index: 1000;
+}
+
+.fab:hover {
+  transform: scale(1.08) translateY(-3px);
+}
+
+/* View Animations */
+.view-section {
+  animation: fadeIn 0.4s var(--ease-spring);
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Dropdown & Modal States */
+.hidden-custom {
+  opacity: 0;
+  transform: scale(0.95) translateY(-10px);
+  pointer-events: none;
+}
+
+.show-custom {
+  opacity: 1;
+  transform: scale(1) translateY(0);
+  pointer-events: auto;
+}
+
+.hidden-modal {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.hidden-modal .modal-content {
+  transform: scale(0.9) translateY(20px);
+}
+
+.show-modal {
+  opacity: 1;
+  pointer-events: auto;
+  z-index: 9999;
+}
+
+.show-modal .modal-content {
+  transform: scale(1) translateY(0);
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+  width: 5px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #CBD5E1;
+  border-radius: 10px;
+}
+
+@keyframes toastSlideIn {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -20px) scale(0.95);
+  }
+
+  to {
+    opacity: 1;
+    transform: translate(-50%, 0) scale(1);
+  }
+}
+
+.toast-animate {
+  animation: toastSlideIn 0.3s var(--ease-spring) forwards;
+}
