@@ -485,7 +485,9 @@ const handleInstall = async (release: Release) => {
   installState.progress = 0
   installState.logs = [t('versions.startInstalling', { version: release.tag_name })]
 
+  const zipAsset = release.assets?.find(asset => asset.name.toLowerCase().endsWith('.zip'))
   let downloadUrl =
+    zipAsset?.browser_download_url ||
     release.zipball_url ||
     `https://github.com/silly-hhhh123/sillytavern-launcher-gui-custom/archive/refs/tags/${release.tag_name}.zip`
   try {
