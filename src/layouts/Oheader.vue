@@ -8,7 +8,7 @@ import {
   PhList,
   PhClock,
   PhPlug,
-  PhWrench,
+  PhKey,
   PhFolderOpen,
   PhTerminalWindow,
   PhGear,
@@ -191,7 +191,7 @@ onUnmounted(() => {
             active-class="bg-blue-50 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400"
             class="flex flex-col items-center justify-center w-full aspect-square rounded-xl hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-100 group"
           >
-            <PhWrench :size="24" weight="duotone" class="mb-1.5 group-hover:scale-110 transition-transform" />
+            <PhKey :size="24" weight="duotone" class="mb-1.5 group-hover:scale-110 transition-transform" />
             <span class="text-[11px] font-medium text-center leading-tight">{{ t('nav.smallTools') }}</span>
           </router-link>
         </div>
