@@ -21,6 +21,8 @@ export default {
         name: '酒馆文字及生图api密钥购买',
         url: 'https://pay.ldxp.cn/shop/BM7RR8F6',
       },
+    ],
+    酒馆使用教程: [
       {
         defaultIcon: BookOpen,
         name: '酒馆使用教程',
