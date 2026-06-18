@@ -636,6 +636,46 @@ const refreshNodeEnv = async () => {
   await checkNodeBoth()
 }
 
+const autoInstallBuiltInDependencies = async () => {
+  if (route.query.action === 'install_node' || route.query.action === 'one_click_setup') return
+  if (!(window as any).__TAURI_INTERNALS__) return
+
+  const needsBuiltInGit = !config.value.useSystemGit && gitInfo.value.source !== 'local'
+  const needsBuiltInNode =
+    !config.value.useSystemNode && (nodeInfo.value.source !== 'local' || !isNodeVersionValid.value || !npmInfo.value.version)
+
+  if (!needsBuiltInGit && !needsBuiltInNode) return
+
+  if (needsBuiltInGit && !gitInstallState.installing) {
+    document.getElementById('git-settings')?.scrollIntoView({ behavior: 'smooth' })
+    simulateClickEffect('btn-install-git')
+    try {
+      await installGit()
+    } catch (e) {
+      console.error('Auto install git failed:', e)
+    }
+  }
+
+  await checkGit()
+  await checkGitBoth()
+  await checkNode()
+  await checkNpm()
+  await checkNodeBoth()
+
+  const stillNeedsBuiltInNode =
+    !config.value.useSystemNode && (nodeInfo.value.source !== 'local' || !isNodeVersionValid.value || !npmInfo.value.version)
+
+  if (stillNeedsBuiltInNode && !nodeInstallState.installing) {
+    document.getElementById('node-settings')?.scrollIntoView({ behavior: 'smooth' })
+    simulateClickEffect('btn-install-node')
+    try {
+      await installNode()
+    } catch (e) {
+      console.error('Auto install node failed:', e)
+    }
+  }
+}
+
 // Watch for config changes and save automatically
 watch(
   config,
@@ -667,11 +707,15 @@ watch(
   },
 )
 
-onMounted(() => {
-  loadConfig()
+onMounted(async () => {
+  await loadConfig()
   fetchProxies()
-  checkGit().then(() => {
-    checkNode().then(() => {
+  await checkGit()
+  await checkNode()
+  await checkNpm()
+  await checkNodeBoth()
+  await checkGitBoth()
+
       // 如果是通过一键安装NodeJS进来的，自动触发安装
       if (route.query.action === 'install_node' || route.query.action === 'one_click_setup') {
         if (route.query.action === 'one_click_setup') {
@@ -743,12 +787,10 @@ onMounted(() => {
           // 移除URL参数
           router.replace({ query: {} })
         }
+      } else {
+        autoInstallBuiltInDependencies()
       }
-    })
-  })
-  checkNpm()
-  checkNodeBoth()
-  checkGitBoth()
+
   checkElevation()
   checkSystemCpuCores()
 })
