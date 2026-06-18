@@ -22,11 +22,13 @@ import { Dialog } from '../lib/useDialog'
 import { consoleStatus } from '../lib/consoleState'
 
 const { t, locale } = useI18n()
-const appWindow = getCurrentWindow()
+const appWindow = (window as any).__TAURI_INTERNALS__ ? getCurrentWindow() : null
 let unlistenClose: (() => void) | null = null
 let isForceClosing = false
 
 const requestClose = async () => {
+  if (!appWindow) return
+
   if (isForceClosing) {
     await appWindow.close()
     return
@@ -83,10 +85,13 @@ const requestClose = async () => {
 }
 
 const minimize = async () => {
+  if (!appWindow) return
   await appWindow.minimize()
 }
 
 onMounted(async () => {
+  if (!appWindow) return
+
   unlistenClose = await appWindow.onCloseRequested(async event => {
     if (!isForceClosing) {
       event.preventDefault()
